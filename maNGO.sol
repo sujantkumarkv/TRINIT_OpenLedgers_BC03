@@ -3,49 +3,51 @@ pragma solidity >=0.7.0 <0.9.0;
 contract NGO {
 
     address public owner;
-    constructor (address owner) {
-        owner = msg.sender;
-    }
 
     struct Donor {
         string name;
-        uint donation;
+        uint donatedAmount;
         address donorAddress;
+    }
+
+    constructor(address owner) public {
+        owner = msg.sender;
     }
 
     mapping (address => uint) ngoWallet;
 
     //ngo maintains a list of donors
-    Donor[] public Donors;
-    Donor[] public singleTxDonors;
+
+    Donor[] uniqueDonors;   //list of unique donors
+    Donor[] allTransactions;   //list of all transactions
 
     function donate(string memory _name) external payable {
         //increment money in ngo wallet
         ngoWallet[owner] += msg.value;
 
         //create an instance of the current donor
-        Donor memory currentDonor = Donor(_name, msg.value, msg.sender);
+        Donor memory currDonor = Donor(_name, msg.value, msg.sender);
         //add this donors details in the transaction log
-        Donors.push(currentDonor);
+        allTransactions.push(currDonor);
 
-        //add donor in List of Donors
+        //add donor in unique donors
         //if already present, increment the contributed value
         uint256 i;
-        for (i = 0; i < Donors.length; i++) {
+        for (i = 0; i < uniqueDonors.length; i++) {
             // if this donor already has done a donation
-            if(currentDonor.donorAddress == Donors[i].donorAddress) {
-                currentDonor.donation += msg.value;
-                continue;
+            if(currDonor.donorAddress == uniqueDonors[i].donorAddress) {
+                uniqueDonors[i].donatedAmount += msg.value;
+                break;
             }
         }
-        if(i == Donors.length) {
-            singleTxDonors.push(currentDonor);
+        if(i == uniqueDonors.length) {
+            uniqueDonors.push(currDonor);
         }
     }
 
     //Transaction Log
+    // prints all the donations recieved to the NGO
     function transactionLog() public view returns(Donor[] memory) {
-        return singleTxDonors;
-    }
-    
+        return allTransactions;
+    }  
 }
