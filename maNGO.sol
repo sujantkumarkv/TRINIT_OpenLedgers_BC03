@@ -6,7 +6,7 @@ contract NGO {
 
     struct Donor {
         string name;
-        uint totalDonatedAmount;
+        uint donatedAmount;
         address donorAddress;
     }
 
@@ -17,8 +17,9 @@ contract NGO {
     mapping (address => uint) ngoWallet;
 
     //ngo maintains a list of donors
-    Donor[] listOfDonors;
-    Donor[] listOfDonorsWithIndividualTx;
+
+    Donor[] uniqueDonors;   //list of unique donors
+    Donor[] allTransactions;   //list of all transactions
 
     function donate(string memory _name) external payable {
         //increment money in ngo wallet
@@ -27,26 +28,26 @@ contract NGO {
         //create an instance of the current donor
         Donor memory currDonor = Donor(_name, msg.value, msg.sender);
         //add this donors details in the transaction log
-        listOfDonorsWithIndividualTx.push(currDonor);
+        allTransactions.push(currDonor);
 
-        //add donor in List of Donors
+        //add donor in unique donors
         //if already present, increment the contributed value
         uint256 i;
-        for (i = 0; i < listOfDonors.length; i++) {
+        for (i = 0; i < uniqueDonors.length; i++) {
             // if this donor already has done a donation
-            if(currDonor.donorAddress == listOfDonors[i].donorAddress) {
-                currDonor.totalDonatedAmount += msg.value;
+            if(currDonor.donorAddress == uniqueDonors[i].donorAddress) {
+                uniqueDonors[i].donatedAmount += msg.value;
                 break;
             }
         }
-        if(i == listOfDonors.length) {
-            listOfDonors.push(currDonor);
+        if(i == uniqueDonors.length) {
+            uniqueDonors.push(currDonor);
         }
     }
 
     //Transaction Log
+    // prints all the donations recieved to the NGO
     function transactionLog() public view returns(Donor[] memory) {
-        return listOfDonorsWithIndividualTx;
-    }
-    
+        return allTransactions;
+    }  
 }
