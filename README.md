@@ -15,3 +15,7 @@ Our objective is to build a Decentralised Application for an NGO. The web app al
 - check our index.js file, we have written the front end code
 - as of now the website doenst have the functionality
 - but the smart contract we deployed on remix is working perfectly fine
+
+
+## Video Link
+https://www.loom.com/share/9690e55615a3453eb2994fe7e4446db5
