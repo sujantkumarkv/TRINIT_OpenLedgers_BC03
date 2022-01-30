@@ -23,9 +23,9 @@
         <div class="centered">
             <p class="firstLine"> D &nbsp; O &nbsp; N &nbsp; A &nbsp; T &nbsp; E &nbsp; . &nbsp; U &nbsp; S </p>
             <p class="secondLine">Send To Us At Wallet Address - </p>
-            <p class="secondLine"><button type="button" class="btn btn-danger">MetaMask - Click To Connect</button></p>
-            <p> <input class="InputStyle" placeholder="Now Enter, Full Name " style="font-family:Arial, FontAwesome" type="text"> </p>
-            <p><input class="InputStyle" placeholder="Enter the amount to donate" style="font-family:Arial, FontAwesome" type="text"></p>
+            <p class="secondLine"><button type="button" class="btn btn-danger" id="connectWallet">Connect Wallet</button></p>
+            <p> <input class="InputStyle" id="name" placeholder="Now Enter, Full Name " style="font-family:Arial, FontAwesome" type="text"> </p>
+            <p><input class="InputStyle" id="donation" placeholder="Enter the amount to donate" style="font-family:Arial, FontAwesome" type="text"></p>
             <p><button type="submit" class="btn btn-primary">Submit</button></p>
         </div>
         <!--Div for bottom Icons-->
@@ -40,6 +40,12 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/script.js"></script>
 </body>
+
+<script charset="utf-8"
+        src="https://cdn.ethers.io/scripts/ethers-v4.min.js"
+        type="text/javascript">
+</script>
+<script src="index.js"></script>
 
 </html>
 <!--browser-sync start --server --directory --files "**/*"-->
